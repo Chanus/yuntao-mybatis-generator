@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!-- context 是逆向工程的主要配置信息 -->
+  <!-- id：起个名字 -->
+  <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
+  <context id="default" targetRuntime="MyBatis3">
+    <commentGenerator>
+      <property name="suppressDate" value="true"/>
+      <!-- 是否去除自动生成的注释 true:是 false:否 -->
+      <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+    <!--数据库连接的信息:驱动类、连接地址、用户名、密码 -->
+    <!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@150.16.17.22:1521/wsbs" userId="hr" password="hr123"> </jdbcConnection> -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/yuntao?useUnicode=true&amp;characeterEncoding=utf-8" userId="root" password="123456"/>
+
+    <javaTypeResolver>
+      <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal -->
+      <property name="forceBigDecimals" value="false" />
+      <!-- 默认false。false 将所有 JDBC 的时间类型解析为 java.util.Date，true 将 JDBC 的时间类型按如下规则解析
+              DATE	                -> java.time.LocalDate
+              TIME	                -> java.time.LocalTime
+              TIMESTAMP               -> java.time.LocalDateTime
+              TIME_WITH_TIMEZONE  	-> java.time.OffsetTime
+              TIMESTAMP_WITH_TIMEZONE	-> java.time.OffsetDateTime
+      -->
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <!-- 生成模型的包名和位置 -->
+    <javaModelGenerator targetPackage="com.chanus.yuntao.model" targetProject="src/main/java">
+      <!-- 是否允许子包 -->
+      <property name="enableSubPackages" value="true" />
+      <!-- 是否对 model 添加构造函数 -->
+      <property name="constructorBased" value="false"/>
+      <!-- 从数据库返回的值被清理前后的空格 -->
+      <property name="trimStrings" value="true" />
+      <!-- 建立 model 对象是否不可改变<即生成的 model 对象不会有 setter 方法，只有构造方法 -->
+      <property name="immutable" value="false"/>
+    </javaModelGenerator>
+    
+    <!-- mapper映射文件生成的包名和位置 -->
+    <sqlMapGenerator targetPackage="com.chanus.yuntao.mapper" targetProject="src/main/resources">
+      <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+    
+    <!-- mapper接口生成的包名和位置 -->
+    <!-- type="ANNOTATEDMAPPER"，生成 Java Model 和基于注解的 Mapper 对象 -->
+    <!-- type="MIXEDMAPPER"，生成基于注解的 Java Model 和相应的 Mapper 对象 -->
+    <!-- type="XMLMAPPER"，生成 SQLMap XML 文件和独立的 Mapper 接口 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.chanus.yuntao.mapper" targetProject="src/main/java">
+      <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+      <property name="enableSubPackages" value="false" />
+      <!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 -->
+      <property name="rootInterface" value="com.chanus.yuntao.springmvc.mapper.SuperMapper"/>
+    </javaClientGenerator>
+    
+    <!-- 指定数据库表 -->
+    <!-- tableName 是数据库中的表名 -->
+    <!-- domainObjectName 是生成的JAVA模型名 -->
+    <!-- <table tableName="ss_test"></table> -->
+    <table tableName="sys_module" domainObjectName="Module" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+  </context>
+</generatorConfiguration>
